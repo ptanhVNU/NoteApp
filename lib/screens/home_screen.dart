@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         elevation: 0.15,
         title: const Text(
-          'Todos',
+          'Notes',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,

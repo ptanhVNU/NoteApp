@@ -28,6 +28,7 @@ class _AddScreenState extends State<AddScreen> {
         backgroundColor: Colors.white,
         elevation: 0.15,
         titleSpacing: 0,
+        centerTitle: false,
         title: const Text(
           'Add',
           style: TextStyle(
@@ -79,8 +80,10 @@ class _AddScreenState extends State<AddScreen> {
                       ),
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Title',
+                        hintStyle:
+                            TextStyle(color: Colors.black.withOpacity(0.3)),
                         border: InputBorder.none,
                       ),
                       controller: _titleController,
@@ -96,8 +99,10 @@ class _AddScreenState extends State<AddScreen> {
                       ),
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Description',
+                        hintStyle:
+                            TextStyle(color: Colors.black.withOpacity(0.3)),
                         border: InputBorder.none,
                       ),
                       controller: _descriptionController,

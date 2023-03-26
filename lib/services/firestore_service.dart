@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:task_manager/models/task.dart';
 
 class FirestoreService {
