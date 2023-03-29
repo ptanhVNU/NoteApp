@@ -1,4 +1,13 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:task_manager/services/storage_service.dart';
 import 'package:task_manager/services/firestore_service.dart';
 
 class AddScreen extends StatefulWidget {
@@ -13,9 +22,13 @@ class _AddScreenState extends State<AddScreen> {
   final _descriptionController = TextEditingController();
   String titleInput = " ";
   bool isLoading = false;
+  File? _storedImage;
+  String path = '';
+  String fileName = '';
 
   @override
   Widget build(BuildContext context) {
+    final StorageService storageService = StorageService();
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData.fallback(),
@@ -40,15 +53,44 @@ class _AddScreenState extends State<AddScreen> {
         actions: [
           IconButton(
             onPressed: () async {
+              /// add image here
+              // final results = await FilePicker.platform.pickFiles(
+              //   allowMultiple: false,
+              //   type: FileType.custom,
+              //   allowedExtensions: ['png', 'jpg'],
+              // );
+              final picker = ImagePicker();
+              final results =
+                  await picker.pickImage(source: ImageSource.gallery);
+              if (results == null) {
+                if (!mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('No file selected'),
+                  ),
+                );
+                return;
+              }
+              path = results.path;
+              setState(() {
+                _storedImage = File(path);
+              });
+              fileName = results.name;
+            },
+            icon: const Icon(Icons.image),
+          ),
+          IconButton(
+            onPressed: () async {
               setState(() {
                 isLoading = true;
               });
 
-              await FirestoreService().addTask(
+              await FirestoreService().addNote(
                 title: _titleController.text,
                 description: _descriptionController.text,
               );
-
+              await StorageService().uploadFile(path, fileName);
+              // xu ly up len firebase o day
               setState(() {
                 isLoading = false;
               });
@@ -91,6 +133,51 @@ class _AddScreenState extends State<AddScreen> {
                         titleInput = val;
                       },
                     ),
+                    if (_storedImage != null)
+                      Container(
+                        padding: const EdgeInsets.all(10.0),
+                        width: MediaQuery.of(context).size.width,
+                        height: 250.0,
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                image: DecorationImage(
+                                  image: FileImage(_storedImage!),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Container(
+                                  height: 30.0,
+                                  width: 30.0,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.black,
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _storedImage = null;
+                                      });
+                                    },
+                                    child: const Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                      size: 16.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     TextField(
                       style: const TextStyle(
                         fontFamily: 'Roboto',

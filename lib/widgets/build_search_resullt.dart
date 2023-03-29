@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:task_manager/screens/edit_screen.dart';
 
-import '../models/task.dart';
+import '../models/note.dart';
 
 class BuildSearchResult extends StatefulWidget {
-  final List<Task> tasks;
-  const BuildSearchResult({super.key, required this.tasks});
+  final List<Note> notes;
+  const BuildSearchResult({super.key, required this.notes});
 
   @override
   State<BuildSearchResult> createState() => _BuildSearchResultState();
@@ -20,7 +20,7 @@ class _BuildSearchResultState extends State<BuildSearchResult> {
       padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
       child: GridView.builder(
         shrinkWrap: true,
-        itemCount: widget.tasks.length,
+        itemCount: widget.notes.length,
         gridDelegate: SliverWovenGridDelegate.count(
           crossAxisCount: 2,
           mainAxisSpacing: 6,
@@ -35,14 +35,14 @@ class _BuildSearchResultState extends State<BuildSearchResult> {
           ],
         ),
         itemBuilder: (BuildContext context, int index) {
-          Task task = widget.tasks[index];
+          Note note = widget.notes[index];
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => EditScreen(
-                    task: task,
+                    note: note,
                   ),
                 ),
               );
@@ -59,7 +59,7 @@ class _BuildSearchResultState extends State<BuildSearchResult> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      task.title,
+                      note.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -70,7 +70,7 @@ class _BuildSearchResultState extends State<BuildSearchResult> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      task.description,
+                      note.description,
                       maxLines: 5,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

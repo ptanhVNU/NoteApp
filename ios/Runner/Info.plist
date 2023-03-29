@@ -10,6 +10,10 @@
 	<string>Task Manager</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need to take picture from photo library</string>
+	<key>NSCameraUsageDescription</key>
+   	<string>Need to take picture using Camera</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>

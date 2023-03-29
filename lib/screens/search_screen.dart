@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/models/task.dart';
+import 'package:task_manager/models/note.dart';
 
 import 'package:task_manager/widgets/build_search_resullt.dart';
 
 class Search extends SearchDelegate {
-  final List<Task> tasks;
+  final List<Note> notes;
 
-  Search(this.tasks);
+  Search(this.notes);
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -30,26 +30,26 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    List<Task> matchQuery = [];
-    for (var item in tasks) {
+    List<Note> matchQuery = [];
+    for (var item in notes) {
       if (item.title.toLowerCase().contains(query.toLowerCase()) ||
           item.description.toLowerCase().contains(query.toLowerCase())) {
         matchQuery.add(item);
       }
     }
 
-    return BuildSearchResult(tasks: matchQuery);
+    return BuildSearchResult(notes: matchQuery);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<Task> matchQuery = [];
-    for (var item in tasks) {
+    List<Note> matchQuery = [];
+    for (var item in notes) {
       if (item.title.toLowerCase().contains(query.toLowerCase()) ||
           item.description.toLowerCase().contains(query.toLowerCase())) {
         matchQuery.add(item);
       }
     }
-    return BuildSearchResult(tasks: matchQuery);
+    return BuildSearchResult(notes: matchQuery);
   }
 }

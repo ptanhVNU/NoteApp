@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager/models/popup_item.dart';
 import 'package:task_manager/models/popup_items.dart';
-import 'package:task_manager/models/task.dart';
+import 'package:task_manager/models/note.dart';
 import 'package:task_manager/screens/add_screen.dart';
 import 'package:task_manager/screens/search_screen.dart';
 import 'package:task_manager/widgets/build_grid_view.dart';
@@ -32,8 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         actions: [
-          StreamBuilder<List<Task>>(
-              stream: loadTask(),
+          StreamBuilder<List<Note>>(
+              stream: loadNote(),
               builder: (context, snapshot) {
                 final tasks = snapshot.data;
                 return IconButton(
@@ -97,9 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Stream<List<Task>> loadTask() => FirebaseFirestore.instance
+  Stream<List<Note>> loadNote() => FirebaseFirestore.instance
       .collection('notes')
       .snapshots()
       .map((snapshots) =>
-          snapshots.docs.map((e) => Task.fromJson(e.data())).toList());
+          snapshots.docs.map((e) => Note.fromJson(e.data())).toList());
 }

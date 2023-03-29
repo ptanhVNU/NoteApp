@@ -1,11 +1,17 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:task_manager/services/firestore_service.dart';
 
-import '../models/task.dart';
+import '../models/note.dart';
 
 class EditScreen extends StatefulWidget {
-  final Task task;
-  const EditScreen({Key? key, required this.task}) : super(key: key);
+  final Note note;
+  const EditScreen({Key? key, required this.note}) : super(key: key);
 
   @override
   State<EditScreen> createState() => _EditScreenState();
@@ -18,9 +24,16 @@ class _EditScreenState extends State<EditScreen> {
 
   @override
   void initState() {
-    titleController.text = widget.task.title;
-    descriptionController.text = widget.task.description;
+    titleController.text = widget.note.title;
+    descriptionController.text = widget.note.description;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
   }
 
   void _saveForm() {
@@ -54,10 +67,10 @@ class _EditScreenState extends State<EditScreen> {
                 isLoading = true;
               });
 
-              await FirestoreService().editTask(
+              await FirestoreService().editNote(
                 title: titleController.text,
                 description: descriptionController.text,
-                docId: widget.task.id,
+                docId: widget.note.id,
               );
 
               setState(() {
@@ -92,7 +105,7 @@ class _EditScreenState extends State<EditScreen> {
                     ),
                     TextButton(
                       onPressed: () async {
-                        await FirestoreService().deleteTask(widget.task.id);
+                        await FirestoreService().delNote(widget.note.id);
 
                         if (!mounted) return;
                         // close the dialog

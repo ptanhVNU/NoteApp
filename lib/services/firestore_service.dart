@@ -1,34 +1,38 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:task_manager/models/task.dart';
+import 'package:task_manager/models/note.dart';
 
 class FirestoreService {
-  FirebaseFirestore firebaseStorage = FirebaseFirestore.instance;
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   // add Task to Firebase
-  Future addTask({required String title, required String description}) async {
-    final docTask = firebaseStorage.collection('notes').doc();
 
-    final task = Task(
-      id: docTask.id,
+  Future addNote({
+    required String title,
+    required String description,
+  }) async {
+    final docNote = firebaseFirestore.collection('notes').doc();
+
+    final note = Note(
+      id: docNote.id,
       title: title,
       description: description,
       date: Timestamp.fromDate(DateTime.now()),
     );
-    final json = task.toJson();
+    final json = note.toJson();
 
-    await docTask.set(json);
+    await docNote.set(json);
   }
 
   // edit Task
-  Future editTask({
+  Future editNote({
     required String docId,
     required String title,
     required String description,
   }) async {
     try {
-      await firebaseStorage.collection('notes').doc(docId).update({
+      await firebaseFirestore.collection('notes').doc(docId).update({
         // request object
         // tao 1 model chua cac thong tin can update len
 
@@ -45,9 +49,9 @@ class FirestoreService {
   }
 
   //delete Task
-  Future deleteTask(String docId) async {
+  Future delNote(String docId) async {
     try {
-      await firebaseStorage.collection('notes').doc(docId).delete();
+      await firebaseFirestore.collection('notes').doc(docId).delete();
     } catch (e) {
       print(e);
     }

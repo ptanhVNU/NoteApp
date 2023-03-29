@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:task_manager/screens/edit_screen.dart';
 
-import '../models/task.dart';
+import '../models/note.dart';
 
 class BuildGridView extends StatefulWidget {
   const BuildGridView({
@@ -45,7 +45,7 @@ class _BuildGridViewState extends State<BuildGridView> {
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   // Parse snapshot get from Firebase into Task Model
-                  Task task = Task.fromSnapshot(
+                  Note note = Note.fromSnapshot(
                     snapshot.data!.docs[index],
                   );
                   return GestureDetector(
@@ -54,7 +54,7 @@ class _BuildGridViewState extends State<BuildGridView> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => EditScreen(
-                            task: task,
+                            note: note,
                           ),
                         ),
                       );
@@ -71,7 +71,7 @@ class _BuildGridViewState extends State<BuildGridView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              task.title,
+                              note.title,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -82,7 +82,7 @@ class _BuildGridViewState extends State<BuildGridView> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              task.description,
+                              note.description,
                               maxLines: 5,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
