@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/models/note.dart';
+import '../models/note.dart';
 
-import 'package:task_manager/widgets/build_search_resullt.dart';
+import '../widgets/build_search_resullt.dart';
 
 class Search extends SearchDelegate {
   final List<Note> notes;

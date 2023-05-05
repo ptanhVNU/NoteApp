@@ -1,14 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:task_manager/services/storage_service.dart';
-import 'package:task_manager/services/firestore_service.dart';
+import '../services/storage_service.dart';
+import '../services/firestore_service.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({Key? key}) : super(key: key);
@@ -28,7 +23,6 @@ class _AddScreenState extends State<AddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final StorageService storageService = StorageService();
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData.fallback(),
@@ -53,12 +47,6 @@ class _AddScreenState extends State<AddScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              /// add image here
-              // final results = await FilePicker.platform.pickFiles(
-              //   allowMultiple: false,
-              //   type: FileType.custom,
-              //   allowedExtensions: ['png', 'jpg'],
-              // );
               final picker = ImagePicker();
               final results =
                   await picker.pickImage(source: ImageSource.gallery);

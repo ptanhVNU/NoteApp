@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/models/popup_item.dart';
+import 'popup_item.dart';
 
 class PopUpItems {
   static const List<PopUpItem> itemFirst = [

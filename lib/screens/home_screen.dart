@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:task_manager/models/popup_item.dart';
-import 'package:task_manager/models/popup_items.dart';
-import 'package:task_manager/models/note.dart';
-import 'package:task_manager/screens/add_screen.dart';
-import 'package:task_manager/screens/search_screen.dart';
-import 'package:task_manager/widgets/build_grid_view.dart';
+import '../models/popup_item.dart';
+import '../models/popup_items.dart';
+import '../models/note.dart';
+import 'add_screen.dart';
+import 'search_screen.dart';
+import '../widgets/build_grid_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

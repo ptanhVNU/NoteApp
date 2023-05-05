@@ -1,7 +1,8 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:task_manager/models/note.dart';
+
+import '../models/note.dart';
 
 class FirestoreService {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -18,7 +19,7 @@ class FirestoreService {
       id: docNote.id,
       title: title,
       description: description,
-      date: Timestamp.fromDate(DateTime.now()),
+      date: DateTime.now(),
     );
     final json = note.toJson();
 
