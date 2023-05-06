@@ -35,14 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
           StreamBuilder<List<Note>>(
               stream: loadNote(),
               builder: (context, snapshot) {
-                final tasks = snapshot.data;
+                final notes = snapshot.data;
                 return IconButton(
                   onPressed: () async {
                     await showSearch(
                       context: context,
-                      delegate: Search(
-                        tasks!,
-                      ),
+                      delegate: Search(notes!),
                     );
                   },
                   icon: const Icon(Icons.search, color: Colors.black),

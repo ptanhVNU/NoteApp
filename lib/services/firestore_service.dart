@@ -19,7 +19,7 @@ class FirestoreService {
       id: docNote.id,
       title: title,
       description: description,
-      date: DateTime.now(),
+      date: Timestamp.fromDate(DateTime.now()),
     );
     final json = note.toJson();
 
